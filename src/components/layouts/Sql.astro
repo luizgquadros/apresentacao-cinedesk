@@ -1,0 +1,69 @@
+---
+// Slide 23: modelo físico do banco — o script SQL de cada tabela num cartão,
+// em duas colunas, com palavras-chave na cor de destaque e tipos em cinza.
+import type { SlideSql } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+import Fonte from '../Fonte.astro';
+
+interface Props {
+  slide: SlideSql;
+}
+
+const { slide } = Astro.props;
+
+// Duas colunas com alturas parecidas: cada tabela vai para a coluna com menos linhas até agora.
+const colunas: (typeof slide.tabelas)[] = [[], []];
+const linhas = [0, 0];
+for (const tabela of slide.tabelas) {
+  const c = linhas[0] <= linhas[1] ? 0 : 1;
+  colunas[c].push(tabela);
+  linhas[c] += tabela.sql.split('\n').length;
+}
+
+const PALAVRAS = /\b(CREATE|TABLE|PRIMARY|KEY|AUTO_INCREMENT|NOT|NULL|DEFAULT|UNIQUE|TRUE|FALSE|CURRENT_TIMESTAMP)\b/g;
+const TIPOS = /\b(INT|VARCHAR|BOOLEAN|DATETIME|DECIMAL)\b/g;
+
+function escapar(texto: string): string {
+  return texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function destacar(sql: string): string {
+  return escapar(sql)
+    .replace(TIPOS, '<span class="sql-tipo">$1</span>')
+    .replace(PALAVRAS, '<span class="sql-chave">$1</span>');
+}
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} tamanho={64} />
+  {slide.subtitulo && <p class="mt-[10px] mb-0 text-[24px] text-secundario">{slide.subtitulo}</p>}
+  <div class="mt-[20px] flex-1 min-h-0 grid grid-cols-2 gap-[24px] items-start">
+    {
+      colunas.map((coluna) => (
+        <div class="flex flex-col gap-[14px]">
+          {coluna.map((tabela) => (
+            <figure class="m-0 rounded-[22px] bg-superficie px-[26px] py-[12px]">
+              <pre class="sql m-0 whitespace-pre text-[14.5px] leading-[1.32] text-texto" aria-label={`Tabela ${tabela.nome}`} set:html={destacar(tabela.sql)} />
+            </figure>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <Fonte texto={slide.fonte} class="mt-[8px]" />
+</div>
+
+<style>
+  .sql {
+    font-family: 'SF Mono', ui-monospace, Menlo, Consolas, 'Liberation Mono', monospace;
+    text-align: left;
+  }
+  .sql :global(.sql-chave) {
+    color: var(--color-destaque);
+    font-weight: 600;
+  }
+  .sql :global(.sql-tipo) {
+    color: var(--color-secundario);
+    font-weight: 500;
+  }
+</style>

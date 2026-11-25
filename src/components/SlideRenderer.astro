@@ -17,6 +17,7 @@ import Referencias from './layouts/Referencias.astro';
 import Skills from './layouts/Skills.astro';
 import UsoIa from './layouts/UsoIa.astro';
 import Abertura from './layouts/Abertura.astro';
+import Sql from './layouts/Sql.astro';
 
 interface Props {
   slide: Slide;
@@ -35,6 +36,7 @@ const { slide, ativo = false } = Astro.props;
   {slide.tipo === 'tabela' && <Tabela slide={slide} />}
   {slide.tipo === 'tres-imagens' && <TresImagens slide={slide} />}
   {slide.tipo === 'imagem' && <Imagem slide={slide} />}
+  {slide.tipo === 'sql' && <Sql slide={slide} />}
   {slide.tipo === 'qrcode' && <QrCode slide={slide} />}
   {slide.tipo === 'grafico' && <Grafico slide={slide} />}
   {slide.tipo === 'lista' && <Lista slide={slide} />}

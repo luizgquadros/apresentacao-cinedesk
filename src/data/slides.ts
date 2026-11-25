@@ -1,4 +1,4 @@
-// Conteúdo dos 31 slides. Textos copiados exatamente do roteiro original.
+// Conteúdo dos 32 slides. Textos copiados exatamente do roteiro original.
 // Os caminhos de imagem são relativos a src/assets/img/.
 
 const FONTE = 'Equipe_03 (Etec Uirapuru, 2026)';
@@ -113,6 +113,17 @@ export interface SlideIa extends SlideBase {
   tituloUsos: string;
   usos: UsoIa[];
 }
+export interface TabelaSql {
+  nome: string;
+  sql: string;
+}
+export interface SlideSql extends SlideBase {
+  tipo: 'sql';
+  titulo: string;
+  subtitulo?: string;
+  tabelas: TabelaSql[];
+  fonte: string;
+}
 export interface SlideAbertura extends SlideBase {
   tipo: 'abertura';
   titulo: string;
@@ -137,6 +148,7 @@ export type Slide =
   | SlideLista
   | SlideSkills
   | SlideIa
+  | SlideSql
   | SlideAbertura
   | SlideReferencias;
 
@@ -196,7 +208,7 @@ export const slides: Slide[] = [
       'Requisitos: Funcionais e Não Funcionais',
       'Protótipos: Baixa, Média e Alta Definição',
       'Diagramas UML: Caso de Uso e Classe',
-      'Projeto de Banco de Dados: Conceitual e Lógico',
+      'Projeto de Banco de Dados: Conceitual, Lógico e Físico',
       'Documentação',
       'Percentual de Conclusão',
       'Desafios',
@@ -409,11 +421,82 @@ export const slides: Slide[] = [
   },
   {
     numero: 23,
+    tipo: 'sql',
+    titulo: 'Projeto de Banco de Dados - Físico:',
+    subtitulo: 'Modelo Físico de Banco de Dados (MySQL)',
+    tabelas: [
+      {
+        nome: 'funcionario',
+        sql: `CREATE TABLE funcionario
+(
+    id_funcionario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    login VARCHAR(50) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    UNIQUE (login)
+);`,
+      },
+      {
+        nome: 'produto',
+        sql: `CREATE TABLE produto
+(
+    id_produto INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255) NULL,
+    id_categoria_produto INT NOT NULL,
+    quantidade INT NOT NULL DEFAULT 0,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    estoque_minimo INT NOT NULL DEFAULT 10,
+    preco_compra DECIMAL(10,2) NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);`,
+      },
+      {
+        nome: 'movimentacao_estoque',
+        sql: `CREATE TABLE movimentacao_estoque
+(
+    id_movimentacao INT PRIMARY KEY AUTO_INCREMENT,
+    id_produto INT NOT NULL,
+    id_funcionario INT NOT NULL,
+    quantidade INT NOT NULL,
+    data_hora_movimentacao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    observacao VARCHAR(255) NULL
+);`,
+      },
+      {
+        nome: 'cliente',
+        sql: `CREATE TABLE cliente
+(
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    telefone VARCHAR(15) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    UNIQUE (cpf),
+    UNIQUE (email)
+);`,
+      },
+      {
+        nome: 'categoria_produto',
+        sql: `CREATE TABLE categoria_produto
+(
+    id_categoria_produto INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    UNIQUE (nome)
+);`,
+      },
+    ],
+    fonte: FONTE,
+  },
+  {
+    numero: 24,
     tipo: 'qrcode',
     titulo: 'Documentação:',
   },
   {
-    numero: 24,
+    numero: 25,
     tipo: 'grafico',
     titulo: 'Percentual de Conclusão:',
     rotuloConcluido: 'Concluído',
@@ -433,7 +516,7 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 25,
+    numero: 26,
     tipo: 'lista',
     titulo: 'Desafios:',
     itens: [
@@ -445,7 +528,7 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 26,
+    numero: 27,
     tipo: 'skills',
     titulo: 'Hard Skills:',
     integrantes: [
@@ -457,7 +540,7 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 27,
+    numero: 28,
     tipo: 'skills',
     titulo: 'Soft Skills:',
     integrantes: [
@@ -469,7 +552,7 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 28,
+    numero: 29,
     tipo: 'ia',
     titulo: 'Uso de Inteligência Artificial:',
     rotuloComIa: 'Com apoio de IA',
@@ -485,14 +568,14 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 29,
+    numero: 30,
     tipo: 'definicao',
     titulo: 'Conclusão:',
     texto:
       'O desenvolvimento do CineDesk demonstrou a aplicação prática de conceitos de engenharia de software, resultando em um sistema organizado, seguro e integrado. A solução contribui para otimizar o gerenciamento estoque, reduzindo falhas e fornecendo informações confiáveis para a gestão do cinema.',
   },
   {
-    numero: 30,
+    numero: 31,
     tipo: 'referencias',
     titulo: 'Referências:',
     itens: [
@@ -509,7 +592,7 @@ export const slides: Slide[] = [
     ],
   },
   {
-    numero: 31,
+    numero: 32,
     tipo: 'abertura',
     titulo: 'Demonstração da Aplicação',
   },
