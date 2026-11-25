@@ -100,7 +100,7 @@ export interface SlideSkills extends SlideBase {
   titulo: string;
   integrantes: Integrante[];
 }
-export type IconeUsoIa = 'pergunta' | 'slides' | 'pincel' | 'codigo';
+export type IconeUsoIa = 'pergunta' | 'slides' | 'pincel' | 'codigo' | 'tarefas' | 'erro';
 export interface UsoIa {
   texto: string;
   icone: IconeUsoIa;
@@ -480,6 +480,8 @@ export const slides: Slide[] = [
       { texto: 'Apresentação de slides', icone: 'slides' },
       { texto: 'Ideias de design', icone: 'pincel' },
       { texto: 'Construção da lógica', icone: 'codigo' },
+      { texto: 'Organização de tarefas', icone: 'tarefas' },
+      { texto: 'Correção de erros', icone: 'erro' },
     ],
   },
   {
