@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import type { SlideTresImagens } from '../../data/slides';
+import { imagem } from '../../data/imagens';
+import Titulo from '../Titulo.astro';
+import Fonte from '../Fonte.astro';
+
+interface Props {
+  slide: SlideTresImagens;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="my-auto grid grid-cols-3 gap-[32px]">
+    {
+      slide.imagens.map((img) => {
+        const src = imagem(img.arquivo);
+        return (
+          <figure class="m-0 flex flex-col gap-[16px]">
+            <div class="h-[400px] rounded-[28px] bg-superficie overflow-hidden flex items-center justify-center p-[20px]">
+              <Image
+                src={src}
+                width={src.width}
+                quality={95}
+                alt={img.alt}
+                class="zoomavel w-full h-full object-contain rounded-[10px]"
+                data-zoom
+                loading="eager"
+              />
+            </div>
+            <figcaption class="text-[22px] font-medium text-texto">{img.rotulo}</figcaption>
+          </figure>
+        );
+      })
+    }
+  </div>
+  <Fonte texto={slide.fonte} />
+</div>

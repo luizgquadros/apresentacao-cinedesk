@@ -1,0 +1,19 @@
+---
+import type { SlideEquipe } from '../../data/slides';
+
+interface Props {
+  slide: SlideEquipe;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex items-center">
+  <ul class="m-0 p-0 list-none w-full border-b border-separador">
+    {
+      slide.itens.map((nome) => (
+        <li class="titulo border-t border-separador py-[22px] text-[60px]">{nome}</li>
+      ))
+    }
+  </ul>
+</div>

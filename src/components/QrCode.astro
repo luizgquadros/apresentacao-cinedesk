@@ -1,0 +1,39 @@
+---
+// QR code gerado no build como SVG inline (sem serviço externo).
+import QRCode from 'qrcode';
+
+interface Props {
+  url: string;
+  tamanho?: number;
+}
+
+const { url, tamanho = 440 } = Astro.props;
+
+const svg = await QRCode.toString(url, {
+  type: 'svg',
+  errorCorrectionLevel: 'M',
+  margin: 4,
+  width: tamanho,
+  color: { dark: '#1D1D1F', light: '#FFFFFF' },
+});
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="qrcode block rounded-[28px] border border-separador bg-branco p-[16px]"
+  aria-label="QR code da documentação em PDF"
+  data-sem-navegacao
+>
+  <span class="block" style={`width:${tamanho}px;height:${tamanho}px`}><Fragment set:html={svg} /></span>
+</a>
+
+<style>
+  .qrcode :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    shape-rendering: crispEdges;
+  }
+</style>

@@ -1,0 +1,22 @@
+---
+import type { SlideCapa } from '../../data/slides';
+
+interface Props {
+  slide: SlideCapa;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex items-center justify-start">
+  <dl class="m-0 w-[900px] flex-none rounded-[28px] bg-superficie px-[44px] py-[8px]">
+    {
+      slide.itens.map((item, i) => (
+        <div class:list={['py-[16px]', { 'border-t border-separador': i > 0 }]}>
+          <dt class="text-[18px] text-secundario">{item.rotulo}</dt>
+          <dd class="m-0 mt-[2px] text-[24px] leading-[1.3] font-medium tracking-[-0.01em] text-texto whitespace-nowrap">{item.valor}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

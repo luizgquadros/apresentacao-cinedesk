@@ -1,0 +1,30 @@
+---
+import type { SlideSumario } from '../../data/slides';
+
+interface Props {
+  slide: SlideSumario;
+}
+
+const { slide } = Astro.props;
+const porColuna = Math.ceil(slide.itens.length / 3);
+const colunas = [0, 1, 2].map((c) =>
+  slide.itens.slice(c * porColuna, (c + 1) * porColuna).map((texto, i) => ({ texto, n: c * porColuna + i + 1 })),
+);
+---
+
+<div class="flex-1 min-h-0 flex items-center">
+  <div class="w-full grid grid-cols-3 gap-x-[40px]">
+    {
+      colunas.map((coluna) => (
+        <ol class="m-0 p-0 list-none">
+          {coluna.map((item, i) => (
+            <li class:list={['flex items-baseline gap-[18px] py-[15px]', { 'border-t border-separador': i > 0 }]}>
+              <span class="w-[30px] flex-none text-[19px] tabular-nums text-secundario">{item.n}</span>
+              <span class="text-[22px] leading-[1.25] font-medium tracking-[-0.01em] text-texto whitespace-nowrap">{item.texto}</span>
+            </li>
+          ))}
+        </ol>
+      ))
+    }
+  </div>
+</div>

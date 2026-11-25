@@ -1,0 +1,32 @@
+---
+import type { SlideTabela } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+import Fonte from '../Fonte.astro';
+
+interface Props {
+  slide: SlideTabela;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="my-auto rounded-[28px] bg-superficie px-[40px]">
+    <table class="w-full border-collapse">
+      <tbody>
+        {
+          slide.tabela.map((linha, i) => (
+            <tr class:list={[{ 'border-t border-separador': i > 0 }]}>
+              <th scope="row" class="w-[170px] py-[18px] text-left align-middle text-[20px] font-normal text-secundario">
+                {linha.requisito}
+              </th>
+              <td class="py-[18px] text-[32px] leading-[1.25] font-medium tracking-[-0.01em] text-texto whitespace-nowrap">{linha.descricao}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <Fonte texto={slide.fonte} />
+</div>

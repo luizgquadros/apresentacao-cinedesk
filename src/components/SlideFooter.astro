@@ -1,0 +1,17 @@
+---
+// Rodapé: "Equipe_03" à esquerda e o número do slide (07 / 31) à direita.
+import { TOTAL_SLIDES } from '../data/config';
+
+interface Props {
+  numero: number;
+}
+
+const { numero } = Astro.props;
+const n = String(numero).padStart(2, '0');
+const total = String(TOTAL_SLIDES).padStart(2, '0');
+---
+
+<footer class="flex-none border-t border-separador pt-[16px] flex items-center justify-between text-[17px] text-secundario">
+  <span>Equipe_03</span>
+  <span class="tabular-nums" aria-label={`Slide ${numero} de ${TOTAL_SLIDES}`}>{n} / {total}</span>
+</footer>

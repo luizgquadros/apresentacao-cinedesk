@@ -1,0 +1,20 @@
+---
+// Camada de ampliação das imagens de projeto (diagramas e protótipos).
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-branco/95 p-[2vmin] cursor-zoom-out"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Imagem ampliada"
+  hidden
+>
+  <img id="lightbox-img" class="max-w-full max-h-full object-contain rounded-[12px] bg-branco" alt="" />
+</div>
+
+<style>
+  #lightbox:not([hidden]) {
+    display: flex;
+  }
+</style>

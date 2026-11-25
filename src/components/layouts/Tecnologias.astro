@@ -1,0 +1,66 @@
+---
+// Slide 12: 6 grupos em grade 3 × 2. Todas as 20 logos ficam num quadrado branco do mesmo
+// tamanho, com a imagem numa área interna fixa em object-contain.
+import { Image } from 'astro:assets';
+import type { SlideTecnologias } from '../../data/slides';
+import { imagem } from '../../data/imagens';
+import Titulo from '../Titulo.astro';
+
+interface Props {
+  slide: SlideTecnologias;
+}
+
+const { slide } = Astro.props;
+
+// 5 logos precisam caber em uma linha de cada bloco: 5 × 88 + 4 × 14 = 496 px (área interna do bloco: 501 px).
+const QUADRADO = 88;
+const AREA = 62;
+// Respiro padrão: (88 - 62) / 2 = 13 px. Logos com muito espaço vazio no próprio arquivo
+// podem receber um respiro menor aqui, sem mudar o tamanho do quadrado.
+const RESPIRO_PADRAO = (QUADRADO - AREA) / 2;
+const RESPIRO: Record<string, number> = {
+  'tecnologias/word.png': 6,
+  'tecnologias/svgrepo.svg': 5,
+  'tecnologias/mysql.svg': 4,
+  'tecnologias/java.svg': 9,
+  'tecnologias/lucidchart.png': 9,
+};
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="my-auto grid grid-cols-3 gap-[40px]">
+    {
+      slide.grupos.map((grupo) => (
+        <section class="min-w-0 rounded-[28px] bg-superficie px-[24px] pt-[22px] pb-[24px]">
+          <h3 class="m-0 pb-[14px] border-b border-separador text-[21px] font-semibold tracking-[-0.01em] text-texto">{grupo.nome}</h3>
+          <ul class="m-0 mt-[20px] p-0 list-none flex flex-wrap justify-start gap-x-[14px] gap-y-[16px]">
+            {grupo.itens.map((tec) => {
+              const src = imagem(tec.arquivo);
+              const respiro = RESPIRO[tec.arquivo] ?? RESPIRO_PADRAO;
+              const vetorial = src.format === 'svg';
+              return (
+                <li class="flex flex-col items-center gap-[8px]" style={`width:${QUADRADO}px`}>
+                  <div
+                    class="rounded-[16px] bg-branco border border-separador flex items-center justify-center"
+                    style={`width:${QUADRADO}px;height:${QUADRADO}px;padding:${respiro}px`}
+                  >
+                    <Image
+                      src={src}
+                      width={vetorial ? AREA : Math.min(src.width, AREA * 3)}
+                      height={vetorial ? AREA : undefined}
+                      alt={`Logo do ${tec.nome}`}
+                      class="block w-full h-full object-contain"
+                      loading="eager"
+                    />
+                  </div>
+                  <span class="text-[15px] leading-[1.2] text-secundario text-center whitespace-nowrap">{tec.nome}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</div>

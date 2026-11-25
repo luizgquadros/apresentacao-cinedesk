@@ -1,0 +1,10 @@
+---
+// Linha "Fonte:" com a palavra em negrito.
+interface Props {
+  texto: string;
+  class?: string;
+}
+const { texto, class: classe = '' } = Astro.props;
+---
+
+<p class:list={['m-0 text-[17px] text-secundario', classe]}><strong class="font-semibold">Fonte:</strong> {texto}</p>

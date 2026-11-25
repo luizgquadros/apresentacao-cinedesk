@@ -1,0 +1,19 @@
+---
+// Título do slide: uma cor, caixa normal, sempre em uma linha.
+// Se o texto for longo, a fonte diminui até caber na largura disponível.
+import { semDoisPontos } from '../data/titulo';
+
+interface Props {
+  texto: string;
+  tamanho?: number;
+  largura?: number;
+  class?: string;
+}
+
+const { texto, tamanho = 76, largura = 1728, class: classe = '' } = Astro.props;
+const inteiro = semDoisPontos(texto);
+const cabe = Math.floor(largura / (inteiro.length * 0.56));
+const fonte = Math.max(48, Math.min(tamanho, cabe));
+---
+
+<h2 class:list={['titulo', classe]} style={`font-size:${fonte}px`} data-titulo={texto}>{inteiro}</h2>

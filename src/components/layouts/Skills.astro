@@ -1,0 +1,35 @@
+---
+// Slides 26 e 27: um cartão por integrante (ordem alfabética), com as 3 habilidades em etiquetas.
+// Mesmo estilo dos grupos do slide 12: superfície cinza-clara, título com linha fina e
+// etiquetas brancas com contorno, como os quadrados das logos.
+import type { SlideSkills } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+
+interface Props {
+  slide: SlideSkills;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <ul class="my-auto m-0 p-0 list-none grid grid-cols-5 gap-[32px]">
+    {
+      slide.integrantes.map((integrante) => (
+        <li class="min-w-0 rounded-[28px] bg-superficie px-[26px] pt-[26px] pb-[28px] text-left">
+          <h3 class="m-0 pb-[18px] border-b border-separador text-[27px] leading-[1.15] font-semibold tracking-[-0.015em] text-texto whitespace-nowrap">
+            {integrante.nome}
+          </h3>
+          <ul class="m-0 mt-[24px] p-0 list-none flex flex-col gap-[14px]">
+            {integrante.habilidades.map((habilidade) => (
+              <li class="rounded-[16px] bg-branco border border-separador px-[18px] py-[12px] text-[21px] leading-[1.3] font-medium text-texto text-left">
+                {habilidade}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,45 @@
+---
+// Escolhe o componente de layout conforme o tipo do slide.
+import type { Slide } from '../data/slides';
+import SlideFrame from './SlideFrame.astro';
+import Capa from './layouts/Capa.astro';
+import Equipe from './layouts/Equipe.astro';
+import Sumario from './layouts/Sumario.astro';
+import Definicao from './layouts/Definicao.astro';
+import Tecnologias from './layouts/Tecnologias.astro';
+import Tabela from './layouts/Tabela.astro';
+import TresImagens from './layouts/TresImagens.astro';
+import Imagem from './layouts/Imagem.astro';
+import QrCode from './layouts/QrCode.astro';
+import Grafico from './layouts/Grafico.astro';
+import Lista from './layouts/Lista.astro';
+import Referencias from './layouts/Referencias.astro';
+import Skills from './layouts/Skills.astro';
+import UsoIa from './layouts/UsoIa.astro';
+import Abertura from './layouts/Abertura.astro';
+
+interface Props {
+  slide: Slide;
+  ativo?: boolean;
+}
+
+const { slide, ativo = false } = Astro.props;
+---
+
+<SlideFrame numero={slide.numero} ativo={ativo}>
+  {slide.tipo === 'capa' && <Capa slide={slide} />}
+  {slide.tipo === 'equipe' && <Equipe slide={slide} />}
+  {slide.tipo === 'sumario' && <Sumario slide={slide} />}
+  {slide.tipo === 'definicao' && <Definicao slide={slide} />}
+  {slide.tipo === 'tecnologias' && <Tecnologias slide={slide} />}
+  {slide.tipo === 'tabela' && <Tabela slide={slide} />}
+  {slide.tipo === 'tres-imagens' && <TresImagens slide={slide} />}
+  {slide.tipo === 'imagem' && <Imagem slide={slide} />}
+  {slide.tipo === 'qrcode' && <QrCode slide={slide} />}
+  {slide.tipo === 'grafico' && <Grafico slide={slide} />}
+  {slide.tipo === 'lista' && <Lista slide={slide} />}
+  {slide.tipo === 'skills' && <Skills slide={slide} />}
+  {slide.tipo === 'referencias' && <Referencias slide={slide} />}
+  {slide.tipo === 'ia' && <UsoIa slide={slide} />}
+  {slide.tipo === 'abertura' && <Abertura slide={slide} />}
+</SlideFrame>

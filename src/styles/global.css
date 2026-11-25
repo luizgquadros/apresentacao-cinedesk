@@ -1,0 +1,143 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+/* Sistema visual no estilo das apresentações da Apple: fundo branco, superfícies
+   cinza-claro, texto quase preto e uma única cor de destaque tirada da logo do CineDesk.
+   Contraste sobre branco: texto 16.8:1, secundário 5.1:1, destaque 10.8:1. */
+@theme {
+  --color-*: initial;
+  --color-fundo: #ffffff;
+  --color-superficie: #f5f5f7;
+  --color-texto: #1d1d1f;
+  --color-secundario: #6e6e73;
+  --color-separador: #d2d2d7;
+  --color-trilha: #e8e8ed;
+  --color-destaque: #801010;
+  --color-branco: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    background: var(--color-fundo);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Todo texto corrido justificado, sem hifenização nem palavras partidas */
+  p,
+  li,
+  dd,
+  dt,
+  td,
+  th,
+  figcaption {
+    text-align: justify;
+    hyphens: none;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+}
+
+/* ---------- Tipografia ---------- */
+.titulo {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+  color: var(--color-texto);
+  white-space: nowrap;
+}
+
+/* ---------- Palco e slides ---------- */
+/* A área em volta do slide tem a mesma cor do slide: em tela cheia não aparece borda. */
+.palco {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-fundo);
+}
+.canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--escala, 1));
+  transform-origin: center center;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  background: var(--color-fundo);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+.slide.ativo {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide.ativo {
+    transition: none;
+  }
+}
+
+.esconder-cursor,
+.esconder-cursor * {
+  cursor: none !important;
+}
+
+.zoomavel {
+  cursor: zoom-in;
+}
+
+/* ---------- Versão para impressão (/imprimir) ---------- */
+.impressao {
+  width: 1920px;
+  margin: 0 auto;
+}
+.impressao .slide {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+  break-after: page;
+  page-break-after: always;
+  overflow: hidden;
+}
+.impressao .slide:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body,
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

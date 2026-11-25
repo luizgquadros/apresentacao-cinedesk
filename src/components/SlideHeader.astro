@@ -1,0 +1,29 @@
+---
+// Faixa superior: logos essenciais (72 px de altura, cores originais) e cabeçalho do projeto.
+// O -ml-[19px] compensa a margem transparente à esquerda do PNG da logo do CineDesk, alinhando-a com o texto abaixo.
+import { Image } from 'astro:assets';
+import { imagem } from '../data/imagens';
+
+const ALTURA = 'h-[72px] w-auto object-contain';
+---
+
+<header class="flex-none">
+  <div class="flex items-center justify-between">
+    <Image src={imagem('img-essenciais/logo-cinedesk.png')} width={623} alt="Logo do CineDesk" class={`${ALTURA} -ml-[19px]`} loading="eager" />
+    <div class="flex items-center gap-[40px]">
+      <Image src={imagem('img-essenciais/logo-etec.png')} width={165} alt="Logo da Etec" class={ALTURA} loading="eager" />
+      <Image src={imagem('img-essenciais/logo-cps.png')} width={175} alt="Logo do Centro Paula Souza" class={ALTURA} loading="eager" />
+      <Image
+        src={imagem('img-essenciais/logo-gov-sp.png')}
+        width={194}
+        alt="Logo do Governo do Estado de São Paulo"
+        class={ALTURA}
+        loading="eager"
+      />
+    </div>
+  </div>
+  <div class="mt-[16px] text-secundario leading-[1.35]">
+    <p class="m-0 text-[20px]"><strong class="font-semibold text-texto">Projeto de Software:</strong> Controle de Estoque Bomboniere - Aplicação Desktop</p>
+    <p class="m-0 text-[17px]">Desenvolvimento de Sistemas</p>
+  </div>
+</header>

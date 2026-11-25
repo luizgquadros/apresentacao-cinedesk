@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import SlideRenderer from '../components/SlideRenderer.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { slides } from '../data/slides';
+---
+
+<Base title="CineDesk — Apresentação">
+  <main class="palco">
+    <div class="canvas">
+      {slides.map((slide, i) => <SlideRenderer slide={slide} ativo={i === 0} />)}
+    </div>
+  </main>
+  <Lightbox />
+</Base>
+
+<script>
+  import { iniciarDeck } from '../scripts/deck';
+
+  iniciarDeck();
+</script>

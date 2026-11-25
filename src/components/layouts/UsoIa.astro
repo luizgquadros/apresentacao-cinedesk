@@ -1,0 +1,55 @@
+---
+// Slide 28: rosca com o percentual de apoio de IA à esquerda (mesmo componente do slide 24)
+// e, à direita, os 4 usos em grade 2 × 2 com ícones de linha em SVG inline.
+import type { SlideIa, IconeUsoIa } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+import DonutChart from '../DonutChart.astro';
+import { PERCENTUAL_IA } from '../../data/config';
+
+interface Props {
+  slide: SlideIa;
+}
+
+const { slide } = Astro.props;
+
+// Traços dos ícones (viewBox 24 × 24, linha de 1.8 px na cor de destaque).
+const ICONES: Record<IconeUsoIa, string[]> = {
+  pergunta: [
+    'M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+    'M9.6 8.4a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.7-.9 1.3v.4',
+    'M12 14.6v.1',
+  ],
+  slides: ['M3 4h18', 'M4 4v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4', 'M12 15v3', 'M8.5 21 12 18l3.5 3', 'M8 11l3-3 2 2 3-3'],
+  pincel: [
+    'M20.5 3.5c-3 1-7.6 5.2-9.6 7.7l1.9 1.9c2.5-2 6.7-6.6 7.7-9.6z',
+    'M9.2 13c-2 0-3.6 1.5-3.6 3.5 0 1.4-.9 2.5-2.6 2.6 1 1 2.6 1.4 4 1.4 2.6 0 4.2-1.8 4.2-4z',
+  ],
+  codigo: ['M8 7l-5 5 5 5', 'M16 7l5 5-5 5', 'M13.5 4.5l-3 15'],
+};
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="flex-1 min-h-0 mt-[32px] flex gap-[88px]">
+    <div class="w-[560px] flex-none flex items-center">
+      <DonutChart percentual={PERCENTUAL_IA} rotuloConcluido={slide.rotuloComIa} rotuloNaoConcluido={slide.rotuloSemIa} tamanho={320} />
+    </div>
+    <div class="flex-1 min-w-0 flex flex-col justify-center">
+      <h3 class="m-0 mb-[24px] text-[30px] font-semibold tracking-[-0.02em] text-texto">{slide.tituloUsos}</h3>
+      <ul class="m-0 p-0 list-none grid grid-cols-2 gap-[28px]">
+        {
+          slide.usos.map((uso) => (
+            <li class="min-w-0 rounded-[28px] bg-superficie p-[28px] flex items-center gap-[24px] text-left">
+              <span class="w-[80px] h-[80px] flex-none rounded-[20px] bg-branco border border-separador flex items-center justify-center">
+                <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="var(--color-destaque)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  {ICONES[uso.icone].map((d) => <path d={d} />)}
+                </svg>
+              </span>
+              <span class="text-[26px] leading-[1.3] font-medium tracking-[-0.01em] text-texto">{uso.texto}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>

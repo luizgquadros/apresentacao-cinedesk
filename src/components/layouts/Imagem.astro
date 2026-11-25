@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+import type { SlideImagem } from '../../data/slides';
+import { imagem } from '../../data/imagens';
+import Titulo from '../Titulo.astro';
+import Fonte from '../Fonte.astro';
+
+interface Props {
+  slide: SlideImagem;
+}
+
+const { slide } = Astro.props;
+const [img] = slide.imagens;
+const src = imagem(img.arquivo);
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} tamanho={64} />
+  {slide.subtitulo && <p class="mt-[10px] mb-0 text-[24px] text-secundario">{slide.subtitulo}</p>}
+  <div class="mt-[24px] flex-1 min-h-0 rounded-[28px] bg-superficie p-[20px] flex items-center justify-center">
+    <Image src={src} width={src.width} quality={95} alt={img.alt} class="zoomavel w-full h-full object-contain" data-zoom loading="eager" />
+  </div>
+  <Fonte texto={slide.fonte} class="mt-[16px]" />
+</div>

@@ -1,0 +1,12 @@
+---
+// Versão para PDF: todos os slides em sequência, um por página (Ctrl + P → Salvar como PDF).
+import Base from '../layouts/Base.astro';
+import SlideRenderer from '../components/SlideRenderer.astro';
+import { slides } from '../data/slides';
+---
+
+<Base title="CineDesk — Versão para impressão">
+  <main class="impressao">
+    {slides.map((slide) => <SlideRenderer slide={slide} ativo={true} />)}
+  </main>
+</Base>

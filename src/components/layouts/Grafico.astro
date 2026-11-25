@@ -1,0 +1,40 @@
+---
+// Slide 24: rosca com o percentual à esquerda; lista "O que foi feito" em duas colunas à direita.
+import type { SlideGrafico } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+import DonutChart from '../DonutChart.astro';
+import { PERCENTUAL_CONCLUIDO } from '../../data/config';
+
+interface Props {
+  slide: SlideGrafico;
+}
+
+const { slide } = Astro.props;
+const ITEM = 'flex gap-[14px] py-[6px] border-t border-separador text-[22px] leading-[1.32] text-texto';
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="flex-1 min-h-0 mt-[32px] flex gap-[88px]">
+    <div class="w-[400px] flex-none flex items-center">
+      <DonutChart percentual={PERCENTUAL_CONCLUIDO} rotuloConcluido={slide.rotuloConcluido} rotuloNaoConcluido={slide.rotuloNaoConcluido} tamanho={320} />
+    </div>
+    <div class="flex-1 min-w-0 flex flex-col justify-center">
+      <section>
+        <h3 class="m-0 mb-[8px] text-[30px] font-semibold tracking-[-0.02em] text-texto">{slide.tituloFeito}</h3>
+        <ul class="m-0 p-0 list-none grid grid-cols-2 grid-flow-col grid-rows-5 gap-x-[44px]">
+          {
+            slide.feito.map((item) => (
+              <li class={ITEM}>
+                <svg class="mt-[5px] flex-none" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M3 10.5 8 15.5 17 4.5" fill="none" stroke="var(--color-destaque)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="text-left">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>

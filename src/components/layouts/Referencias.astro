@@ -1,0 +1,31 @@
+---
+import type { SlideReferencias } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+
+interface Props {
+  slide: SlideReferencias;
+}
+
+const { slide } = Astro.props;
+
+// URLs longas não quebram e abrem buracos no texto justificado.
+// <wbr> após "/" permite a quebra de linha sem hífen e sem alterar o texto.
+function partes(ref: string): { texto: string; url: boolean }[] {
+  return ref.split(/(https?:\/\/\S+)/).filter(Boolean).map((t) => ({ texto: t, url: /^https?:\/\//.test(t) }));
+}
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} tamanho={64} />
+  <div class="referencias mt-[24px] text-[22px] leading-[1.4] text-texto" data-referencias>
+    {
+      slide.itens.map((ref) => (
+        <p class="m-0 mb-[12px] pl-[1.5em] -indent-[1.5em]">
+          {partes(ref).map((p) =>
+            p.url ? p.texto.split('/').map((seg, i, arr) => (i < arr.length - 1 ? <>{seg}/<wbr /></> : seg)) : p.texto,
+          )}
+        </p>
+      ))
+    }
+  </div>
+</div>

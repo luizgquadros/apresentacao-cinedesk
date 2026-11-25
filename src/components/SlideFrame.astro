@@ -1,0 +1,31 @@
+﻿---
+// Slide de tela inteira (sem moldura): margens internas, cabeçalho e rodapé fixos.
+// O conteúdo de cada tipo entra no slot.
+import SlideHeader from './SlideHeader.astro';
+import SlideFooter from './SlideFooter.astro';
+import { TOTAL_SLIDES } from '../data/config';
+
+interface Props {
+  numero: number;
+  ativo?: boolean;
+}
+
+const { numero, ativo = false } = Astro.props;
+---
+
+<section
+  class:list={['slide', { ativo }]}
+  id={`slide-${numero}`}
+  data-numero={numero}
+  aria-label={`Slide ${numero} de ${TOTAL_SLIDES}`}
+  aria-hidden={ativo ? 'false' : 'true'}
+  inert={!ativo}
+>
+  <div class="absolute inset-0 px-[96px] pt-[52px] pb-[44px] flex flex-col">
+    <SlideHeader />
+    <div class="relative flex-1 min-h-0 flex flex-col mt-[44px] mb-[32px]">
+      <slot />
+    </div>
+    <SlideFooter numero={numero} />
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+import type { SlideQrCode } from '../../data/slides';
+import { PDF_DOCUMENTACAO_URL } from '../../data/config';
+import Titulo from '../Titulo.astro';
+import QrCodeSvg from '../QrCode.astro';
+
+interface Props {
+  slide: SlideQrCode;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex flex-col">
+  <Titulo texto={slide.titulo} />
+  <div class="flex-1 min-h-0 flex items-center justify-center">
+    <QrCodeSvg url={PDF_DOCUMENTACAO_URL} tamanho={440} />
+  </div>
+</div>

@@ -1,0 +1,15 @@
+---
+// Slide 31: abertura da demonstração. Só o título, grande e centralizado.
+import type { SlideAbertura } from '../../data/slides';
+import Titulo from '../Titulo.astro';
+
+interface Props {
+  slide: SlideAbertura;
+}
+
+const { slide } = Astro.props;
+---
+
+<div class="flex-1 min-h-0 flex items-center justify-center">
+  <Titulo texto={slide.titulo} tamanho={124} class="text-center" />
+</div>
